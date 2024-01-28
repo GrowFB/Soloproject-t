@@ -5,6 +5,7 @@ import axios from "axios";
 export const LoginForm = () => {
   const [id, setId] = useState();
   const [password, setPassword] = useState();
+  const [email, setEmail] = useState();
   return (
     <Wrapper>
       <form action="">
