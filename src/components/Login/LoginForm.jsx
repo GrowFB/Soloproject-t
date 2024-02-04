@@ -2,65 +2,83 @@ import React, { useState } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
 import styled from "styled-components";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../../redux/reducers/loginSlice";
+
 export const LoginForm = () => {
-  const [id, setId] = useState();
-  const [password, setPassword] = useState();
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
   const [email, setEmail] = useState();
+  const dispatch = useDispatch();
+  const handleId = (e) => {
+    setId(e.target.value);
+  };
+  const handlePw = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    if (id === "admin" && password === "admin") {
+      dispatch(setLogin({ id, name: "sy" }));
+      navigate("/admin");
+    } else {
+      alert("fail");
+    }
+  };
+
   return (
-    <Wrapper>
-      <form action="">
-        <H1>Login</H1>
-        <InputBox>
-          <SubInput
-            type="text"
-            placeholder="UserName"
-            onChange={(e) => {
-              setId(e.target.value);
-            }}
-          />
-          <UserIcon />
-        </InputBox>
-        <InputBox>
-          <SubInput
-            type="password"
-            placeholder="Password"
-            onChange={(e) => {
-              setPassword(e.target.password);
-            }}
-          />
-          <LockIcon />
-        </InputBox>
-        <div className="remember-forgot">
-          <label>
-            <input type="checkbox" />
-            remember id
-          </label>
-          <a href="#">Forgot password</a>
-        </div>
-        <button type="submit" className="btn">
-          Login
-        </button>
-        <div className="register-link">
-          <p>
-            Don't have an account? <a href="#">Register</a>
-          </p>
-        </div>
-      </form>
+    <Wrapper className="login">
+      <div className="hh">
+        <form action="">
+          <H1>Login</H1>
+          <InputBox>
+            <SubInput type="text" placeholder="UserName" onChange={handleId} />
+            <UserIcon />
+          </InputBox>
+          <InputBox>
+            <SubInput
+              type="password"
+              placeholder="Password"
+              onChange={handlePw}
+            />
+            <LockIcon />
+          </InputBox>
+          <div className="remember-forgot">
+            <label>
+              <input type="checkbox" />
+              remember id
+            </label>
+            <a href="#">Forgot password</a>
+          </div>
+          <button type="submit" className="btn" onClick={handleLogin}>
+            Login
+          </button>
+          <div className="register-link">
+            <p>
+              Don't have an account? <a href="#">Register</a>
+            </p>
+          </div>
+        </form>
+      </div>
     </Wrapper>
   );
 };
 
 //-----------------------
 const Wrapper = styled.div`
-  width: 420px;
-  background: transparent;
-  border: 3px solid rgba(255, 255, 255, 0.5);
-  color: #fff;
-  border-radius: 10px;
-  padding: 30px 40px;
-  backdrop-filter: blur(30px);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-
+  .hh {
+    width: 420px;
+    background: transparent;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    color: #fff;
+    border-radius: 10px;
+    padding: 30px 40px;
+    backdrop-filter: blur(30px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
   .remember-forgot {
     display: flex;
     justify-content: space-between;
